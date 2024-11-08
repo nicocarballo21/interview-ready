@@ -20,22 +20,51 @@ export class Animal {
 }
 
 export default class AnimalShelter {
+  catQueue: Array<Animal> = [];
+  dogQueue: Array<Animal> = [];
+  allQueue: Array<Animal> = [];
 
-    constructor() {
+  constructor() {}
+
+  enqueue(type: AnimalType): void {
+    if (type === "cat") {
+      this.catQueue.push(new Animal("cat"));
+    } else {
+      this.dogQueue.push(new Animal("dog"));
     }
 
-    enqueue(type: AnimalType): void {
+    this.allQueue.push(new Animal(type));
+  }
 
+  dequeueAny(): Animal | undefined {
+    const animal = this.allQueue.shift();
+
+    if (animal?.type === "cat") {
+      this.catQueue.shift();
+    } else {
+      this.dogQueue.shift();
     }
 
-    dequeueAny(): Animal | undefined {
+    return animal;
+  }
 
-    }
+  dequeueDog(): Animal | undefined {
+    const animal = this.dogQueue.shift();
 
-    dequeueDog(): Animal | undefined {
-    }
+    const i = this.allQueue.findIndex((t) => t === animal);
 
-    dequeueCat(): Animal | undefined {
-    }
+    this.allQueue.splice(i, 1);
+
+    return animal;
+  }
+
+  dequeueCat(): Animal | undefined {
+    const animal = this.catQueue.shift();
+
+    const i = this.allQueue.findIndex((t) => t === animal);
+
+    this.allQueue.splice(i, 1);
+
+    return animal;
+  }
 }
-
