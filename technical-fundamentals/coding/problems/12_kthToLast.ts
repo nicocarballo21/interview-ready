@@ -11,5 +11,18 @@ export type Node<T> = {
 
 export default function kthToLast<T>(
   head: Node<T>,
-  k: number,
-): Node<T> | undefined {}
+  k: number
+): Node<T> | undefined {
+  const list = new LinkedList<T>(head);
+  const length = list.length();
+
+  const index = length - k;
+
+  const ret = list.filter((node, i) => {
+    if (i > index) return true;
+
+    return false;
+  });
+
+  return ret;
+}
