@@ -6,6 +6,22 @@
 // your method should return the original string.
 // You can assume the string has only uppercase and lowercase letters (a - z).
 
-export default function stringCompression (str: string) : string {
- 
+export default function stringCompression(str: string): string {
+  let count = 0;
+  let pointer = str[0];
+  let response = "";
+
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === pointer) {
+      count++;
+    } else {
+      response += pointer + count;
+      pointer = str[i];
+      count = 1;
+    }
+  }
+
+  response += pointer + count;
+
+  return response.length < str.length ? response : str;
 }
