@@ -29,25 +29,45 @@ export class LinkedList<T> {
     this.tail = this.tail.next;
   }
 
-  filter(fn: (node: Node<T>) => Boolean): LinkedList<T> {
+  filter(fn: (node: Node<T>, index: number) => Boolean): LinkedList<T> {
     let p = this.head;
 
     const list = new LinkedList<T>();
 
+    let i = 0;
     while (p) {
-      if (fn(p)) {
+      if (fn(p, i)) {
         list.push(p.value);
       }
 
+      i++;
       p = p.next;
     }
 
     return list;
   }
 
-  visit() {}
+  visit(fn: (node: Node<T>, index: number) => Boolean | void) {
+    let p = this.head;
+
+    let index = 0;
+    while (p) {
+      if (fn(p, index)) {
+        break;
+      }
+      index++;
+      p = p.next;
+    }
+    return this;
+  }
   remove() {}
-  merge() {}
+  merge(list: LinkedList<T>): LinkedList<T> {
+    if (this.tail === undefined) return list;
+
+    this.tail.next = list.head;
+    this.tail = list.tail;
+    return this;
+  }
   print() {}
 
   // extra
@@ -57,13 +77,10 @@ export class LinkedList<T> {
   //iterator(): LinkedListIterator {}
 
   length() {
-    let p = this.head;
     let length = 0;
-
-    while (p) {
+    this.visit(() => {
       length++;
-      p = p.next;
-    }
+    });
     return length;
   }
 }

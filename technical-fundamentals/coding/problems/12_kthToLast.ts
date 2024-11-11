@@ -16,12 +16,11 @@ export default function kthToLast<T>(
   const list = new LinkedList<T>(head);
   const length = list.length();
 
-  const index = length - k;
-
-  const ret = list.filter((node, i) => {
-    if (i > index) return true;
-
-    return false;
+  let ret;
+  list.visit((node, index) => {
+    if (index + k === length) {
+      ret = node;
+    }
   });
 
   return ret;

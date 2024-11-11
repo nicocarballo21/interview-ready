@@ -8,7 +8,7 @@
 
 // ```
 // EXAMPLE
-// Input: 3 -> 5 -> 8 -> 5 -> 10 -> 2 -> 1[partition=5]
+// Input: 3 -> 5 -> 8 -> 5 -> 10 -> 2 -> 1 [partition=5]
 // Output: 3 -> 1 -> 2 -> 10 -> 5 -> 5 -> 8
 // ```
 
@@ -21,5 +21,12 @@ export type Node<T> = {
 
 export default function partition<T>(
   head: Node<T> | undefined,
-  x: T,
-): Node<T> | undefined {}
+  x: T
+): Node<T> | undefined {
+  const list = new LinkedList<T>(head);
+
+  const left = list.filter((node) => node.value < x);
+  const right = list.filter((node) => node.value >= x);
+
+  return left.merge(right).head;
+}

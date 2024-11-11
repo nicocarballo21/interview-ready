@@ -12,7 +12,7 @@
 // ```
 // EXAMPLE
 // Input: A->8->C->D->E-> C[thesameCasearlier] Output: C
-// Hints: #50, #69, #83, #90
+// Hints: #69, # #50,83, #90
 // ```
 
 import { LinkedList } from "./10_LinkedList";
@@ -23,5 +23,20 @@ export type Node<T> = {
 };
 
 export default function detectLoop<T>(
-  head: Node<T> | undefined,
-): Node<T> | null {}
+  head: Node<T> | undefined
+): Node<T> | null {
+  const set: Set<Node<T>> = new Set();
+
+  const list = new LinkedList<T>(head);
+
+  let ret: Node<T> | null = null;
+
+  list.visit((node) => {
+    if (set.has(node)) {
+      ret = node;
+      return true;
+    }
+    set.add(node);
+  });
+  return ret;
+}

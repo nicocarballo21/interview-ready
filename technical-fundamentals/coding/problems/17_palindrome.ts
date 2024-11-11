@@ -9,4 +9,14 @@ export type Node<T> = {
   next?: Node<T>;
 };
 
-export default function isPalindrome<T>(head: Node<T> | undefined): boolean {}
+export default function isPalindrome<T>(head: Node<T> | undefined): boolean {
+  const list = new LinkedList<T>(head);
+
+  let a = "";
+
+  list.visit((node) => {
+    a += node.value;
+  });
+
+  return a === a.split("").reverse().join("");
+}
