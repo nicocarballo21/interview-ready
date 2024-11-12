@@ -21,5 +21,23 @@ export type TreeNode<T> = {
 };
 
 export default function minimalTree<T>(
-  sortedArray: T[],
-): TreeNode<T> | undefined {}
+  sortedArray: T[]
+): TreeNode<T> | undefined {
+  if (!sortedArray.length) return;
+
+  const pivotIndex = Math.floor(sortedArray.length / 2);
+
+  const pivot = sortedArray[pivotIndex];
+
+  const leftArray: Array<T> = sortedArray.slice(0, pivotIndex);
+  const rightArray: Array<T> = sortedArray.slice(
+    pivotIndex + 1,
+    sortedArray.length
+  );
+
+  return {
+    value: pivot,
+    left: minimalTree(leftArray),
+    right: minimalTree(rightArray),
+  };
+}

@@ -13,7 +13,16 @@ export type TreeNode<T> = {
 export default function firstCommonAncestor<T>(
   root: TreeNode<T> | undefined,
   p: TreeNode<T>,
-  q: TreeNode<T>,
+  q: TreeNode<T>
 ): TreeNode<T> | undefined {
+  if (!root) return undefined;
 
+  if (root === q || root === p) return root;
+
+  const left = firstCommonAncestor(root.left, p, q);
+  const right = firstCommonAncestor(root.right, p, q);
+
+  if (left && right) return root;
+
+  return left || right;
 }

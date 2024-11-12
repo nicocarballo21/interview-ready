@@ -16,5 +16,40 @@ export type ListNode<T> = {
 };
 
 export default function listOfDepths<T>(
-  root: TreeNode<T> | null,
-): ListNode<T>[] {}
+  root: TreeNode<T> | null
+): ListNode<T>[] {
+  if (!root) return [];
+  const lists: ListNode<T>[] = [];
+  const level = 0;
+
+  dfs(root, lists, level);
+
+  return lists;
+}
+
+function dfs<T>(
+  node: TreeNode<T> | undefined,
+  lists: ListNode<T>[],
+  level: number
+) {
+  if (!node) return;
+
+  const currentList = lists[level];
+
+  if (!currentList) {
+    lists[level] = { value: node.value };
+  } else {
+    let p = currentList;
+
+    while (p) {
+      if (!p.next) {
+        p.next = { value: node.value };
+        break;
+      }
+      p = p.next;
+    }
+  }
+
+  dfs(node.left, lists, level + 1);
+  dfs(node.right, lists, level + 1);
+}
